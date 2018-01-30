@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>uStudy</title>
+    <link rel='stylesheet' href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <div id="container">
+      <h1>Welcome to {{ our_greeting | title }}!</h1>
+      {% if weekday_list %}
+        <ul>
+          {% for day in weekday_list %}
+            <li>{{ day | slice:":3" }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>Days of week is not defined</p> 
+      {% endif %}
+    <div>
+  </body>
+</html>
