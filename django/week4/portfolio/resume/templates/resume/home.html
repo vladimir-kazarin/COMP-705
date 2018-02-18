@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Resume{% endblock %}
+{% block content %}
+<div class="container">
+  <h1>Resume</h1>
+  <hr>
+  {% if education_list %}
+      <h4>Education</h4>
+      {% for education in education_list %}
+        <ul>
+          <li>{{education.institution_name}}</li>
+          <li>{{education.location}}</li>
+          <li>{{education.degree}}</li>
+          <li>{{education.major}}</li>
+          <li>{{education.gpa}}</li>
+        </ul>
+      {% endfor %}    
+  {% endif %}
+  <hr>
+  {% if experience_list %}
+      <h4>Experience</h4>  
+      {% for experience in experience_list %}
+        <ul>
+          <li>{{experience.title}}</li>
+          <li>{{experience.company}}</li>
+          <li>{{experience.location}}</li>
+          <li>{{experience.start_date}}</li>
+          {% if experience.end_date == None %}
+              <li>Present</li>
+          {% else %}
+              <li>{{experience.end_date}}</li>
+          {% endif %}  
+          <li>{{experience.description}}</li>
+        </ul>
+      {% endfor %} 
+  {% endif %}  
+</div>
+{% endblock %}
