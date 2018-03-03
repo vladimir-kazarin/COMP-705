@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Lab 6</title>
+
+	<style>
+		li {
+			list-style: none;
+		}
+
+		.centered {
+			text-align: center;
+		}
+
+		.problem {
+			text-size: 1.5em;
+			font-weight: 700;
+			padding: 10px 20px;
+		}
+
+	</style>
+
+</head>
+
+<body>
+	<div class="header centered">
+		<h1>Welcome To Lab 6</h1>
+		<p><small>It's good to see you again, you like nice today.</small></p>
+
+		<h3>Instructions</h3>
+		<p>Read, and then do. It's that simple.</p>
+		<p>Add to workspace/labs/week6 and push to git. You get me?</p>
+	</div>
+
+	<div id="prob1">
+		<p class='problem'>1. When I click the button below, it should change from "click me!" to "I was clicked!"</p>
+		<button id="button1" onclick="clickMe()">Click Me!</button>
+	</div>
+
+	<div id="prob2">
+		<p class='problem'>2. There are two buttons below. When a button is clicked, the other
+			 bottom should appear and the button that was clicked should disappear.</p>
+		<button id="button2" onclick="hideButtonA()">Button A: Show B</button>
+		<button id="button3" onclick="hideButtonB()">Button B: Show A</button>
+	</div>
+
+	<div id="prob4">
+		<p class='problem' id="header1">3. My favorite color is is pink. When I click the button below. I want
+			this header to change to my favorite color</p>
+		<button onclick="makeItPink()">Pink Is My Favorite Color</button>
+	</div>
+
+	<div id="prob4">
+		<p class='problem'>4. I like to say hi to people. There is an unorded list below and a button. When I click the button,
+			I want another list item to appear greeting a new person.</p>
+		<button onclick="addGreeting()">Say Hi!</button>
+		<ul id="greeting-list"></ul>
+	</div>
+    
+	<div id="prob5">
+		<p class='problem'>5. I like to browse the web. But I'm a nerd, and only use the console.
+			There is a text box and button below. I want to put a url into the text box, click the button, and see the response in the console.</p>
+		<input type="text" id="url">
+		<button onclick="getWebPage()">Fetch!</button>
+	</div>
+
+	<div id="prob6">
+		<p class='problem'>6. I like my data like I like my news...fake. Fill the empty ul below with some fake data from https://jsonplaceholder.typicode.com/ when I click the fetch button.</p>
+		<button onclick="getFakeData()">Fetch!</button>
+		<ul id='fake-list'></ul>
+	</div>
+
+<script>
+	//alert('Have fun! Submit by placing your finished file in workspace/labs/week6 and push to git. Collaborate via slack.');
+	
+	function clickMe(){
+	    document.getElementById("button1").innerHTML="I was clicked!";
+	}
+	
+	function hideButtonA(){
+		document.getElementById("button2").style.visibility = "hidden";
+	    document.getElementById("button3").style.visibility = "visible";
+    }
+	
+	function hideButtonB(){
+		document.getElementById("button3").style.visibility = "hidden";
+	    document.getElementById("button2").style.visibility = "visible";	
+	}
+	
+	function makeItPink(){
+		document.getElementById("header1").style.color = "pink";	
+	}
+	
+	function addGreeting(){
+	    var li = document.createElement("li");
+		li.appendChild(document.createTextNode("Hi!"))
+	    document.getElementById("greeting-list").appendChild(li);
+	}
+	
+	function getWebPage(){
+		var url = document.getElementById('url').value;
+		fetch(url).then(function(response) {
+			//this returns a promise, we want the response as json
+			return response.text();
+		}).then(function(response) {
+			// .then is executed after the successful fetch
+			console.log(response);
+		}).catch(function(error){
+			// .catch is run if an error occured
+			console.log('error');
+		})
+	}
+	
+	function getFakeData(){
+		var ul = document.getElementById('fake-list');
+		var url = "https://jsonplaceholder.typicode.com/posts/";
+		fetch(url).then(function(response) {
+			//this returns a promise, we want the response as json
+			return response.json();
+		}).then(function(response) {
+			// .then is executed after the successful fetch
+			response.forEach(function(element){
+				console.log(element);
+				updateFakeList(ul, element.title, element.body);
+			})
+		}).catch(function(error){
+			// .catch is run if an error occured
+			console.log(error);
+		})
+	}
+
+	function updateFakeList(ul, title, body){
+		var li = document.createElement("li");
+		var post = document.createTextNode(title + " - " + body);
+
+		li.appendChild(post);
+		ul.appendChild(li);
+	}
+</script>
+</body>
+
+</html>
